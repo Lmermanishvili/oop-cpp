@@ -6,7 +6,7 @@ using namespace std;
 // Car industry
 class CarIndustry {
     public:
-        string CarBrend, CarModel, CarCountry;
+        string CarBrend, CarModel, CarCountry, CarSellCountry;
         
         CarIndustry(string carBrend, string carModel, string carCountry) {
             CarBrend = carBrend;
@@ -16,6 +16,8 @@ class CarIndustry {
             cout << " Model : " << CarModel << endl;
             cout << " Manufacturing country : " << CarCountry << endl;
         }
+        
+        virtual void carMove()=0;
 };
 
 // Car feature
@@ -31,12 +33,6 @@ class CarFeature {
         }
 };
 
-// absract class
-class CarMove {
-    public:
-        virtual void move()=0;
-};
-
 // Country for sale
 class Country {
     public:
@@ -46,32 +42,35 @@ class Country {
         }
 };
 
-class Bugatti: public CarIndustry, public CarFeature, public CarMove, public Country {
+class Bugatti: public CarIndustry, public CarFeature, public Country {
     public:
         Bugatti(string carBrend, string carModel, string carCountry): CarIndustry(carBrend, carModel, carCountry) {
         
         }
         
-        void move() {
+        void carMove() {
             cout << " " << CarBrend << " can move" << endl;
         }
+        
 };
 
-class Ferrari: public Bugatti {
+class Ferrari: public CarIndustry, public CarFeature, public Country {
     public:
-        Ferrari(string carBrend, string carModel, string carCountry): Bugatti(carBrend, carModel, carCountry) {
+        Ferrari(string carBrend, string carModel, string carCountry): CarIndustry(carBrend, carModel, carCountry) {
         
         }
-        void move() {
+        
+        void carMove() {
             cout << " " << CarBrend << " can move" << endl;
         }
 };
-class Lamborghini: public Bugatti {
+class Lamborghini: public CarIndustry, public CarFeature, public Country {
     public:
-        Lamborghini(string carBrend, string carModel, string carCountry): Bugatti(carBrend, carModel, carCountry) {
+        Lamborghini(string carBrend, string carModel, string carCountry): CarIndustry(carBrend, carModel, carCountry) {
         
         }
-        void move() {
+        
+        void carMove() {
             cout << " " << CarBrend << " can move" << endl;
         }
 };
@@ -83,17 +82,17 @@ int main()
 
 Bugatti bugatti("Bugatti", "Veiron", "France");
 bugatti.carFeatures(431, "Black", "8.0 L", 2, 7, 1599950);
-bugatti.move();
+bugatti.carMove();
 bugatti.getCountry("United Arab Emirates");
 
 Ferrari ferrari("Ferrari", "F8 spider", "Itally");
 ferrari.carFeatures(340, "Red", "3.9 L", 2, 7, 274280);
-ferrari.move();
+ferrari.carMove();
 ferrari.getCountry("USA States");
 
 Lamborghini lamborghini("Lamborghini", "Murciélago LP 670 –4 SuperVeloce", "Itally");
 lamborghini.carFeatures(342, "Orange", "6.5 L", 2, 7, 450000);
-lamborghini.move();
+lamborghini.carMove();
 lamborghini.getCountry("United Arab Emirates");
 
 
